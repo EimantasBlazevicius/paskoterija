@@ -23,8 +23,10 @@ const database = getFirestore(app);
 
 const dbInstance = collection(database, "userData");
 
-export const saveNote = () => {
+export const saveUser = (firstName, lastName, data, importantData) => {
   addDoc(dbInstance, {
-    title: "noteTitle",
+    firstName: firstName,
+    lastName: lastName,
+    loans: [{ data: data, importantData: importantData }],
   });
 };

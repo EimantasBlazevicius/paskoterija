@@ -1,5 +1,4 @@
 import React from "react";
-import { saveNote } from "../firestoreConfig";
 import {
   Box,
   List,
@@ -21,12 +20,16 @@ import MoodIcon from "@mui/icons-material/Mood";
 import HistoryIcon from "@mui/icons-material/History";
 import SettingsIcon from "@mui/icons-material/Settings";
 
-const Navigation = ({ toggleDrawer }) => {
+interface SideNavProps {
+  toggleDrawer: (value: boolean) => void;
+}
+
+const SideNav = ({ toggleDrawer }: SideNavProps) => {
   return (
     <Box
       role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
+      onClick={() => toggleDrawer(false)}
+      onKeyDown={() => toggleDrawer(false)}
     >
       <List>
         <ListItem>
@@ -109,4 +112,4 @@ const Navigation = ({ toggleDrawer }) => {
   );
 };
 
-export default Navigation;
+export default SideNav;
