@@ -1,15 +1,23 @@
 import React from "react";
 import { Stack, TextField, Typography, Box, Button } from "@mui/material";
-import { saveUser } from "../firestoreConfig";
+import { UserContext } from "../Context/userContext";
 
 const Register = () => {
   const [firstName, setFirstName] = React.useState<string>("");
   const [lastName, setLastName] = React.useState<string>("");
-  const [data, setData] = React.useState<string>("");
-  const [importantData, setImportantData] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
+  const [passwordRepeat, setPasswordRepeat] = React.useState<string>("");
+  const [email, setEmail] = React.useState<string>("");
+
+  const { registerWithEmailAndPassword } = React.useContext(UserContext);
 
   const handleSubmit = () => {
-    saveUser(firstName, lastName, data, importantData);
+    if (password !== passwordRepeat) {
+      console.log("Passwords do not match");
+      return;
+    }
+    console.log(firstName + " " + lastName, email, password);
+    registerWithEmailAndPassword(firstName + " " + lastName, email, password);
   };
 
   return (
@@ -45,20 +53,34 @@ const Register = () => {
 
         <Stack direction="row" spacing={4}>
           <TextField
-            id="data"
-            label="Data"
+            id="pw"
+            label="Password"
             variant="standard"
-            value={data}
-            onChange={(e) => setData(e.target.value)}
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <TextField
-            id="importantData"
-            label="Important Data"
+            id="pw2"
+            label="Repeat Password"
             variant="standard"
-            value={importantData}
-            onChange={(e) => setImportantData(e.target.value)}
+            type="password"
+            value={passwordRepeat}
+            onChange={(e) => setPasswordRepeat(e.target.value)}
           />
         </Stack>
+
+        <Stack direction="row" spacing={4}>
+          <TextField
+            id="email"
+            label="Email"
+            variant="standard"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Stack>
+
         <Stack direction="row" pt={3} spacing={4}>
           <Button variant="contained" color="primary" onClick={handleSubmit}>
             Submit
