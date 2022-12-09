@@ -1,6 +1,9 @@
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import PhoneIcon from "@mui/icons-material/Phone";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import SendIcon from "@mui/icons-material/Send";
+
 import {
   IconButton,
   Stack,
@@ -8,6 +11,7 @@ import {
   ButtonGroup,
   Drawer,
   Typography,
+  Divider,
 } from "@mui/material";
 
 import Navigation from "./sideNav.component";
@@ -20,7 +24,7 @@ interface NavLineProps {
 }
 
 const NavLine = ({ toggleDrawer, menuOpen }: NavLineProps) => {
-  const { logOut, loggedIn } = React.useContext(UserContext);
+  const { logOut, loggedIn, userData } = React.useContext(UserContext);
 
   return (
     <Stack direction="row" p="1rem" spacing={5} bgcolor="#f2a94d">
@@ -30,16 +34,22 @@ const NavLine = ({ toggleDrawer, menuOpen }: NavLineProps) => {
       <Drawer anchor="left" open={menuOpen} onClose={() => toggleDrawer(false)}>
         <Navigation toggleDrawer={toggleDrawer} />
       </Drawer>
+      <Divider style={{ marginLeft: "auto" }} />
       <Button startIcon={<PhoneIcon />} color="success" variant="text">
         <Typography variant="subtitle2" component="h5">
           +37060482010
         </Typography>
       </Button>
-      <Button color="primary" variant="text" style={{ margin: "auto" }}>
+      <Button startIcon={<SendIcon />} color="success" variant="text">
+        <Typography variant="subtitle2" component="h5">
+          support@debtlottery.com
+        </Typography>
+      </Button>
+      {/* <Button color="primary" variant="text">
         <Link style={{ textDecoration: "none" }} to="/">
           <Typography color="secondary">Home Logo placeholder</Typography>
         </Link>
-      </Button>
+      </Button> */}
       {!loggedIn ? (
         <ButtonGroup>
           <Button variant="contained" color="secondary">
@@ -60,9 +70,12 @@ const NavLine = ({ toggleDrawer, menuOpen }: NavLineProps) => {
           </Button>
         </ButtonGroup>
       ) : (
-        <Button variant="contained" color="primary" onClick={logOut}>
-          Logout
-        </Button>
+        <ButtonGroup>
+          <Button startIcon={<AccountBoxIcon />}>{userData.name}</Button>
+          <Button variant="contained" color="primary" onClick={logOut}>
+            Logout
+          </Button>
+        </ButtonGroup>
       )}
     </Stack>
   );

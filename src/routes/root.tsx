@@ -6,7 +6,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import NavLine from "../components/navigation.component";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/userContext";
 
 import { initializeApp } from "firebase/app";
@@ -48,23 +48,38 @@ export default function Root() {
   const [menuOpen, setMenuOpen] = React.useState<boolean>(false);
   const [user, setUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const googleProvider = new GoogleAuthProvider();
+  const [userData, setUserData] = React.useState({});
+  const navigate = useNavigate();
+
+  const getUserData = async (uid: string) => {
+    const q = query(collection(db, "users"), where("uid", "==", uid));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      setUserData(doc.data());
+    });
+  };
 
   const signInWithGoogle = async () => {
     try {
+      const googleProvider = new GoogleAuthProvider();
       const res = await signInWithPopup(auth, googleProvider);
-      const user = res.user;
-      setUser(user);
-      const q = query(collection(db, "users"), where("uid", "==", user.uid));
+      const newUser = res.user;
+      getUserData(newUser.uid);
+      setUser(newUser);
+      const q = query(collection(db, "users"), where("uid", "==", newUser.uid));
       const docs = await getDocs(q);
+
       if (docs.docs.length === 0) {
         await addDoc(collection(db, "users"), {
-          uid: user.uid,
-          name: user.displayName,
+          uid: newUser.uid,
+          name: newUser.displayName,
           authProvider: "google",
-          email: user.email,
+          email: newUser.email,
         });
       }
+      navigate("/");
     } catch (err) {
       console.error(err);
     }
@@ -82,7 +97,10 @@ export default function Root() {
 
   const logInWithEmailAndPassword = async (email: string, password: string) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      const newUser = res.user;
+      setUser(newUser);
+      getUserData(newUser.uid);
     } catch (err) {
       console.error(err);
     }
@@ -95,14 +113,15 @@ export default function Root() {
   ) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      const user = res.user;
+      const newUser = res.user;
       await addDoc(collection(db, "users"), {
-        uid: user.uid,
+        uid: newUser.uid,
         name,
         authProvider: "local",
         email,
       });
-      setUser(user);
+      setUser(newUser);
+      setUserData(getUserData(newUser.uid));
     } catch (err) {
       console.error(err);
     }
@@ -120,7 +139,7 @@ export default function Root() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true);
-        console.log(user);
+        getUserData(user.uid);
       } else {
         setLoggedIn(false);
       }
@@ -135,6 +154,7 @@ export default function Root() {
     <UserContext.Provider
       value={{
         user,
+        userData,
         loggedIn,
         setUser,
         signInWithGoogle,
