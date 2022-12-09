@@ -45,11 +45,6 @@ const NavLine = ({ toggleDrawer, menuOpen }: NavLineProps) => {
           support@debtlottery.com
         </Typography>
       </Button>
-      {/* <Button color="primary" variant="text">
-        <Link style={{ textDecoration: "none" }} to="/">
-          <Typography color="secondary">Home Logo placeholder</Typography>
-        </Link>
-      </Button> */}
       {!loggedIn ? (
         <ButtonGroup>
           <Button variant="contained" color="secondary">
@@ -71,7 +66,14 @@ const NavLine = ({ toggleDrawer, menuOpen }: NavLineProps) => {
         </ButtonGroup>
       ) : (
         <ButtonGroup>
-          <Button startIcon={<AccountBoxIcon />}>{userData.name}</Button>
+          <Button startIcon={<AccountBoxIcon />}>
+            <Link
+              style={{ textDecoration: "none", color: "#1976d2" }}
+              to="/profile"
+            >
+              {userData.name}
+            </Link>
+          </Button>
           <Button variant="contained" color="primary" onClick={logOut}>
             Logout
           </Button>

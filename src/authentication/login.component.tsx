@@ -3,6 +3,7 @@ import { Button, Box, Stack, TextField, Typography } from "@mui/material";
 import { UserContext } from "../Context/userContext";
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from "@mui/icons-material/Google";
+import ContentWrapper from "../components/shared/ContentWrapper";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
@@ -17,7 +18,7 @@ const Login = () => {
   };
 
   return (
-    <Box bgcolor="#f5daa3" height="90vh">
+    <ContentWrapper>
       <Stack pt={5}>
         <Typography variant="h4" color="initial" margin="auto">
           Welcome back!
@@ -59,7 +60,7 @@ const Login = () => {
           Google Login
         </Button>
       </Stack>
-    </Box>
+    </ContentWrapper>
   );
 };
 
