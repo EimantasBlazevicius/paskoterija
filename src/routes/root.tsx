@@ -39,7 +39,6 @@ const firebaseConfig = {
   measurementId: "G-88ZCX1MF2Q",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
@@ -56,7 +55,6 @@ export default function Root() {
 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
       setUserData(doc.data());
     });
   };
