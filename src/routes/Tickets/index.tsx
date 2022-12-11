@@ -1,8 +1,10 @@
+import React from "react";
 import {
   Button,
   Card,
   CardContent,
   FormControl,
+  Grid,
   InputLabel,
   NativeSelect,
   Paper,
@@ -10,13 +12,83 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+
 import ContentWrapper from "./../../components/shared/ContentWrapper";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 const Tickets = () => {
+  const columns: GridColDef[] = [
+    { field: "id", headerName: "Ticket ID", width: 150 },
+    { field: "loan", headerName: "Related Loan", width: 170 },
+
+    {
+      field: "date_purchased",
+      headerName: "Date of purchase",
+      width: 150,
+    },
+    { field: "will_play", headerName: "Will ticket play", width: 120 },
+  ];
+
+  const rows = [
+    {
+      id: "#A000001",
+      loan: "BigBank Car",
+      date_purchased: "2022/12/10",
+      will_play: "Yes",
+    },
+    {
+      id: "#A000002",
+      loan: "Savy Credit",
+      date_purchased: "2022/12/10",
+      will_play: "No",
+    },
+    {
+      id: "#A000003",
+      loan: "Swedbank Creditcard",
+      date_purchased: "2022/12/10",
+      will_play: "Yes",
+    },
+    {
+      id: "#A000004",
+      loan: "BigBank Car",
+      date_purchased: "2022/12/10",
+      will_play: "Yes",
+    },
+    {
+      id: "#A000005",
+      loan: "BigBank Car",
+      date_purchased: "2022/12/10",
+      will_play: "Yes",
+    },
+    {
+      id: "#A000006",
+      loan: "BigBank Car",
+      date_purchased: "2022/12/10",
+      will_play: "Yes",
+    },
+    {
+      id: "#A000007",
+      loan: "Savy Credit",
+      date_purchased: "2022/12/10",
+      will_play: "No",
+    },
+    {
+      id: "#A000008",
+      loan: "Savy Credit",
+      date_purchased: "2022/12/10",
+      will_play: "No",
+    },
+    {
+      id: "#A000009",
+      loan: "BigBank Car",
+      date_purchased: "2022/12/10",
+      will_play: "Yes",
+    },
+  ];
+
   return (
     <ContentWrapper>
       <Stack p={5} direction="row">
@@ -99,7 +171,61 @@ const Tickets = () => {
             </Card>
           </Paper>
         </Stack>
-        <Stack direction="column"></Stack>
+        <Grid container marginLeft={3} columnGap={3}>
+          <Grid item xs={3}>
+            <Paper>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" align="center">
+                    <strong>Total Tickets Bought</strong>
+                  </Typography>
+                  <Typography variant="h5" align="center">
+                    995
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Paper>
+          </Grid>
+          <Grid item xs={3}>
+            <Paper>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" align="center">
+                    <strong>Total amount in game</strong>
+                  </Typography>
+                  <Typography variant="h5" align="center">
+                    € 1 995
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Paper>
+          </Grid>
+          <Grid item xs={3}>
+            <Paper>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" align="center">
+                    <strong>Small pot total</strong>
+                  </Typography>
+                  <Typography variant="h5" align="center">
+                    € 700
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper style={{ height: 420, width: "80%" }}>
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={100}
+                rowsPerPageOptions={[100]}
+                style={{ paddingInline: 10 }}
+              />
+            </Paper>
+          </Grid>
+        </Grid>
       </Stack>
     </ContentWrapper>
   );
