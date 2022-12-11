@@ -10,10 +10,11 @@ import {
 import React from "react";
 
 interface PaperCardProps {
-  actionButton: string;
-  handleClick: () => void;
+  actionButton?: string;
+  handleClick?: () => void;
   title: string;
-  imageHeight: string;
+  description?: string;
+  imageHeight?: string;
   imageURL?: string;
 }
 
@@ -21,6 +22,7 @@ const PaperCard: React.FC<PaperCardProps> = ({
   actionButton,
   handleClick,
   title,
+  description,
   imageHeight = "300",
   imageURL,
 }) => {
@@ -36,13 +38,22 @@ const PaperCard: React.FC<PaperCardProps> = ({
           />
         )}
         <CardContent>
-          <Typography variant="h5">{title}</Typography>
+          <Typography gutterBottom variant="h5">
+            {title}
+          </Typography>
+          {description && (
+            <Typography variant="body2" color="text.secondary">
+              {description}
+            </Typography>
+          )}
         </CardContent>
-        <CardActions>
-          <Button onClick={handleClick} size="small">
-            {actionButton}
-          </Button>
-        </CardActions>
+        {actionButton && (
+          <CardActions>
+            <Button onClick={handleClick} size="small">
+              {actionButton}
+            </Button>
+          </CardActions>
+        )}
       </Card>
     </Paper>
   );

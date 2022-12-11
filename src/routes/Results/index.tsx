@@ -1,59 +1,32 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardActions,
-  CardMedia,
-  Grid,
-  Button,
-  Typography,
-  Paper,
-  Stack,
-} from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 // @ts-ignore
 import ProgressBar from "@ramonak/react-progress-bar";
 import ContentWrapper from "../../components/shared/ContentWrapper";
+import PaperCard from "../../components/shared/PaperCard";
 
 const Results = () => {
   return (
     <ContentWrapper>
       <Grid container pt={5}>
         <Grid item xs={7} style={{ padding: "2rem", height: "50vh" }}>
-          <Paper elevation={2}>
-            <Card variant="outlined" style={{ textAlign: "center" }}>
-              <CardMedia
-                component="img"
-                height="300"
-                image="./static/no-results-yet.jpg"
-                alt="waiting for results"
-              />
-              <CardContent>
-                <Typography variant="h5">The game is yet to happen</Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Get More Tickets</Button>
-              </CardActions>
-            </Card>
-          </Paper>
+          <PaperCard
+            title="The game is yet to happen"
+            actionButton="Get More Tickets"
+            handleClick={() => console.log("clicked")}
+            imageURL="./static/no-results-yet.jpg"
+            imageHeight="300"
+          />
         </Grid>
 
         <Grid item xs={5} style={{ padding: "2rem" }}>
-          <Paper elevation={2}>
-            <Card variant="outlined" style={{ textAlign: "center" }}>
-              <CardMedia
-                component="img"
-                height="300"
-                image="./static/no-results-yet-2.jpg"
-                alt="waiting for results"
-              />
-              <CardContent>
-                <Typography variant="h5">The game is yet to happen</Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Get More Tickets</Button>
-              </CardActions>
-            </Card>
-          </Paper>
+          <PaperCard
+            title="The game is yet to happen"
+            actionButton="Get More Tickets"
+            handleClick={() => console.log("clicked")}
+            imageURL="./static/no-results-yet-2.jpg"
+            imageHeight="300"
+          />
         </Grid>
 
         <Grid item xs={7}>
