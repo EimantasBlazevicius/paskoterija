@@ -21,7 +21,7 @@ import HistoryIcon from "@mui/icons-material/History";
 import PolicyIcon from "@mui/icons-material/Policy";
 
 import { UserContext } from "./../Context/userContext";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface SideNavProps {
   toggleDrawer: (value: boolean) => void;
@@ -29,6 +29,71 @@ interface SideNavProps {
 
 const SideNav = ({ toggleDrawer }: SideNavProps) => {
   const { loggedIn } = React.useContext(UserContext);
+  const navigate = useNavigate();
+
+  const navConfig = [
+    {
+      path: "/",
+      icon: <HomeIcon color="info" />,
+      label: "Home",
+      authNeeded: false,
+    },
+    {
+      path: "/results",
+      icon: <MoodIcon color="error" />,
+      label: "Results",
+      authNeeded: true,
+    },
+    {
+      path: "/loans",
+      icon: <AccountBalanceIcon color="info" />,
+      label: "My loans",
+      authNeeded: true,
+    },
+    {
+      path: "/tickets",
+      icon: <ConfirmationNumberIcon color="info" />,
+      label: "My Tickets",
+      authNeeded: true,
+    },
+    {
+      path: "/statistics",
+      icon: <HistoryIcon color="warning" />,
+      label: "Statistics",
+      authNeeded: true,
+      divider: true,
+    },
+    {
+      path: "/covered-loans",
+      icon: <DoneAllIcon color="success" />,
+      label: "Covered loans",
+      authNeeded: false,
+    },
+    {
+      path: "/team",
+      icon: <Diversity1Icon color="secondary" />,
+      label: "Team",
+      authNeeded: false,
+    },
+    {
+      path: "/about",
+      icon: <InfoIcon color="secondary" />,
+      label: "About",
+      authNeeded: false,
+    },
+    {
+      path: "/legal",
+      icon: <PolicyIcon color="info" />,
+      label: "Legal stuff",
+      authNeeded: false,
+    },
+    {
+      path: "/contacts",
+      icon: <ContactsIcon color="info" />,
+      label: "Contacts",
+      authNeeded: false,
+    },
+  ];
 
   return (
     <Box
@@ -36,145 +101,20 @@ const SideNav = ({ toggleDrawer }: SideNavProps) => {
       onClick={() => toggleDrawer(false)}
       onKeyDown={() => toggleDrawer(false)}
     >
-      {loggedIn && (
-        <>
-          <List>
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>{<HomeIcon color="info" />}</ListItemIcon>
-                <Link
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  to="/"
-                >
-                  <ListItemText primary="Home" />
-                </Link>
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>{<MoodIcon color="error" />}</ListItemIcon>
-                <Link
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  to="/results"
-                >
-                  <ListItemText primary="Results" />
-                </Link>
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>
-                  {<AccountBalanceIcon color="info" />}
-                </ListItemIcon>
-                <Link
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  to="/loans"
-                >
-                  <ListItemText primary="My loans" />
-                </Link>
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>
-                  {<ConfirmationNumberIcon color="info" />}
-                </ListItemIcon>
-                <Link
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  to="/tickets"
-                >
-                  <ListItemText primary="My Tickets" />
-                </Link>
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>{<HistoryIcon color="warning" />}</ListItemIcon>
-                <Link
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  to="/statistics"
-                >
-                  <ListItemText primary="Statistics" />
-                </Link>
-              </ListItemButton>
-            </ListItem>
-          </List>
-
-          <Divider color="warning" />
-        </>
-      )}
       <List>
-        {!loggedIn && (
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>{<HomeIcon color="info" />}</ListItemIcon>
-              <Link style={{ textDecoration: "none", color: "inherit" }} to="/">
-                <ListItemText primary="Home" />
-              </Link>
-            </ListItemButton>
-          </ListItem>
-        )}
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>{<DoneAllIcon color="success" />}</ListItemIcon>
-            <Link
-              style={{ textDecoration: "none", color: "inherit" }}
-              to="/covered-loans"
-            >
-              <ListItemText primary="Covered loans" />
-            </Link>
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>{<Diversity1Icon color="secondary" />}</ListItemIcon>
-            <Link
-              style={{ textDecoration: "none", color: "inherit" }}
-              to="/team"
-            >
-              <ListItemText primary="Team" />
-            </Link>
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>{<InfoIcon color="secondary" />}</ListItemIcon>
-            <Link
-              style={{ textDecoration: "none", color: "inherit" }}
-              to="/about"
-            >
-              <ListItemText primary="About the idea" />
-            </Link>
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>{<PolicyIcon color="info" />}</ListItemIcon>
-            <Link
-              style={{ textDecoration: "none", color: "inherit" }}
-              to="/legal"
-            >
-              <ListItemText primary="Legal stuff" />
-            </Link>
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>{<ContactsIcon color="info" />}</ListItemIcon>
-            <Link
-              style={{ textDecoration: "none", color: "inherit" }}
-              to="/contacts"
-            >
-              <ListItemText primary="Contacts" />
-            </Link>
-          </ListItemButton>
-        </ListItem>
+        {navConfig.map((item) => (
+          <>
+            {(!item.authNeeded || item.authNeeded === loggedIn) && (
+              <ListItem onClick={() => navigate(item.path)}>
+                <ListItemButton>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.label} />
+                </ListItemButton>
+              </ListItem>
+            )}
+            {item.divider && <Divider />}
+          </>
+        ))}
       </List>
     </Box>
   );

@@ -12,14 +12,22 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { UserContext } from "../../Context/userContext";
 
 import ContentWrapper from "./../../components/shared/ContentWrapper";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import { useNavigate } from "react-router-dom";
 
 const Tickets = () => {
+  const { loggedIn } = React.useContext(UserContext);
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    !loggedIn && navigate("/auth/login");
+  }, []);
   const columns: GridColDef[] = [
     { field: "id", headerName: "Ticket ID", width: 150 },
     { field: "loan", headerName: "Related Loan", width: 170 },

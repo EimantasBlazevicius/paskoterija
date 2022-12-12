@@ -4,8 +4,16 @@ import { Grid, Stack } from "@mui/material";
 import ProgressBar from "@ramonak/react-progress-bar";
 import ContentWrapper from "../../components/shared/ContentWrapper";
 import PaperCard from "../../components/shared/PaperCard";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../Context/userContext";
 
 const Results = () => {
+  const { loggedIn } = React.useContext(UserContext);
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    !loggedIn && navigate("/auth/login");
+  }, []);
   return (
     <ContentWrapper>
       <Grid container pt={5}>

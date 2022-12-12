@@ -24,13 +24,17 @@ interface NavLineProps {
 }
 
 const NavLine = ({ toggleDrawer, menuOpen }: NavLineProps) => {
-  const { logOut, loggedIn, userData } = React.useContext(UserContext);
+  const { logOut, loggedIn, userData, getPathLabel } =
+    React.useContext(UserContext);
 
   return (
     <Stack direction="row" p="1rem" spacing={5} bgcolor="#f2a94d">
       <IconButton onClick={() => toggleDrawer(true)}>
         <MenuIcon color="success" />
       </IconButton>
+      <Typography variant="h5" color="common.black" paddingTop={0.5}>
+        {getPathLabel()}
+      </Typography>
       <Drawer anchor="left" open={menuOpen} onClose={() => toggleDrawer(false)}>
         <Navigation toggleDrawer={toggleDrawer} />
       </Drawer>

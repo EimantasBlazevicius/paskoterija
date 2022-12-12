@@ -10,8 +10,17 @@ import {
 } from "@mui/material";
 import PaperCard from "./../../components/shared/PaperCard";
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../Context/userContext";
 
 const Loans = () => {
+  const { loggedIn } = React.useContext(UserContext);
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    !loggedIn && navigate("/auth/login");
+  }, []);
+
   return (
     <ContentWrapper>
       <Grid container p={5}>

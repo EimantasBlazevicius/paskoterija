@@ -28,6 +28,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
 } from "firebase/auth";
+import { useLocation } from "react-router-dom";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA1vCxqaC4VI8Uc7xMkjfwRc7jOOKjHUUU",
@@ -49,6 +50,38 @@ export default function Root() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [userData, setUserData] = React.useState({});
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const getPathLabel = () => {
+    switch (location.pathname) {
+      case "/":
+        return "Home";
+      case "/results":
+        return "Results";
+      case "/loans":
+        return "Your Loans";
+      case "/tickets":
+        return "Tickets";
+      case "/statistics":
+        return "Statistics";
+      case "/covered-loans":
+        return "Covered loans";
+      case "/team":
+        return "Team";
+      case "/about":
+        return "About";
+      case "/legal":
+        return "Legal";
+      case "/contacts":
+        return "Contacts";
+      case "/profile":
+        return "Profile";
+      case "/auth/login":
+        return "Login";
+      case "/auth/register":
+        return "Registration";
+    }
+  };
 
   const getUserData = async (uid: string) => {
     const q = query(collection(db, "users"), where("uid", "==", uid));
@@ -87,6 +120,7 @@ export default function Root() {
     signOut(auth)
       .then(() => {
         console.log("signed out with google");
+        navigate("/");
       })
       .catch((error) => {
         console.error("SignOut failed", error);
@@ -160,6 +194,7 @@ export default function Root() {
         logInWithEmailAndPassword,
         registerWithEmailAndPassword,
         sendPasswordReset,
+        getPathLabel,
       }}
     >
       <Container maxWidth="xl" disableGutters>
