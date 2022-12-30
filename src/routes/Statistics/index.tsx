@@ -19,7 +19,7 @@ const Statistics = () => {
         <Grid item xs={2}>
           <Paper>
             <Card>
-              <CardContent></CardContent>
+              <CardContent>To be Done later</CardContent>
             </Card>
           </Paper>
         </Grid>
